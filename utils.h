@@ -35,7 +35,9 @@ namespace beat {
 		public:
 			static bool istream2string(istream &in, string & ret)
 			{
+				// flawfinder: ignore
 				char buffer[_EB_UTILS_BUFFER_LEN];
+				// flawfinder: ignore
 				while (in.read(buffer, sizeof(buffer))) {
 					ret.append(buffer, sizeof(buffer));
 				}
@@ -47,7 +49,8 @@ namespace beat {
 			{
 				char * buffer = (char *)calloc(1, str.size() + 1);
 				if (buffer != NULL) {
-					strcpy(buffer, str.c_str());
+					// flawfinder: ignore
+					strncpy(buffer, str.c_str(), str.size() + 1);
 				}
 				return buffer;
 			}

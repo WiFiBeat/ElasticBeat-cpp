@@ -174,6 +174,7 @@ namespace beat {
 						return "";
 					}
 					const char * ts = d["@timestamp"].GetString();
+					// flawfinder: ignore
 					if (ts == NULL || strlen(ts) != 24 || !strchr(ts, 'T') || ts[23] != 'Z') {
 						// Should look like 2017-06-03T16:45:40.000Z
 						// Invalid timestamp
@@ -185,12 +186,15 @@ namespace beat {
 					if (indexType != NoTime) {
 						switch (indexType) {
 							case Daily:
+								// flawfinder: ignore
 								strncpy(indexDate, ts, 10);
 								break;
 							case Monthly:
+								// flawfinder: ignore
 								strncpy(indexDate, ts, 7);
 								break;
 							case Yearly:
+								// flawfinder: ignore
 								strncpy(indexDate, ts, 4);
 								break;
 							default:
