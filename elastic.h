@@ -258,7 +258,7 @@ namespace beat {
 				}
 
 			public:
-				elastic(const string & host) : _host(host), _elasticSearchVersion(""), _bulkURL(""), _indicesURL("")
+				explicit elastic(const string & host) : _host(host), _elasticSearchVersion(""), _bulkURL(""), _indicesURL("")
 				{
 					if (this->_host.empty()) {
 						throw string("Elastic: Host cannot be empty");
