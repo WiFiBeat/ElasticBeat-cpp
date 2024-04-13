@@ -182,7 +182,7 @@ namespace beat {
 					}
 
 					// Cut the string for the date
-					char * indexDate = (char *)calloc(1, 11);
+					char * indexDate = static_cast<char *>(calloc(1, 11));
 					if (indexType != NoTime) {
 						switch (indexType) {
 							case Daily:
