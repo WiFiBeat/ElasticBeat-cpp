@@ -478,7 +478,7 @@ namespace beat {
 
 					// Create the bulk request
 					stringstream ss;
-					for (unsigned int i = 0; i < indices.size(); ++i) {
+					for (i = 0; i < indices.size(); ++i) {
 						// Add index name
 						ss << "{\"index\":{\"_index\":\""
 							<< indices[i] << "\"";
@@ -540,9 +540,8 @@ namespace beat {
 							 *	"status": 400
 							 * }
 							 */
-							bool first = true;
 							ret->errors = true;
-							stringstream ss;
+							stringstream ss_err;
 							
 							// Get all errors
 							if (response.HasMember("items")) {
@@ -552,9 +551,10 @@ namespace beat {
 									return ret;
 								}
 
-								for (SizeType i = 0; i < items.Size(); i++) {
+								bool first = true;
+								for (SizeType item_size = 0; item_size < items.Size(); item_size++) {
 									stringstream ss2;
-									const Value & idx = items[i]["index"];
+									const Value & idx = items[item_size]["index"];
 									if (!idx.IsObject()) {
 										continue;
 									}
@@ -567,7 +567,7 @@ namespace beat {
 									if (first) {
 										first = false;
 									} else {
-										ss << '\n';
+										ss2 << '\n';
 									}
 
 									ss2 << err["type"].GetString() << ": " << err["reason"].GetString();
@@ -578,12 +578,12 @@ namespace beat {
 										}
 									}
 
-									ss << ss2.str();
+									ss_err << ss2.str();
 								}
 							} else {
-								ss << "Cannot parse error. Capture elasticsearch traffic using tcpdump and report it"; 
+								ss_err << "Cannot parse error. Capture elasticsearch traffic using tcpdump and report it"; 
 							}
-							ret->error = ss.str();
+							ret->error = ss_err.str();
 						} else {
 							// TODO: Get IDs from output
 							/*
@@ -615,8 +615,8 @@ namespace beat {
 								ret->error = "Cannot find items array that contains the IDs in server response";
 								return ret;
 							}
-							for (SizeType i = 0; i < items.Size(); i++) {
-								const Value & idx = items[i]["index"];
+							for (SizeType item_size = 0; item_size < items.Size(); item_size++) {
+								const Value & idx = items[item_size]["index"];
 								if (!idx.IsObject()) {
 									continue;
 								}
