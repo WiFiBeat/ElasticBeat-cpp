@@ -47,7 +47,7 @@ namespace beat {
 
 			static char * copyString2charstar(const string & str)
 			{
-				char * buffer = (char *)calloc(1, str.size() + 1);
+				char * buffer = static_cast<char *>(calloc(1, str.size() + 1));
 				if (buffer != NULL) {
 					// flawfinder: ignore
 					strncpy(buffer, str.c_str(), str.size() + 1);
